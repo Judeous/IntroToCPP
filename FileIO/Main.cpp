@@ -8,42 +8,60 @@ bool fileIOExample()
 	player.health = 100;
 	player.damage = 15;
 
-	std::cout << "Input Player Health: ";
-	std::cin >> player.health;
-	std::cout << std::endl;
-	std::cout << "Input Player Damage: ";
-	std::cin >> player.damage;
-	std::cout << std::endl;
+	char choice = ' ';
 
-	//Saving Start
+	std::cout << "Would you like to Save or Load a Character?" << std::endl << "1: Save" << std::endl << "2: Load" << std::endl;
+	std::cin >> choice;
+
 	std::fstream file;
-	file.open("save.txt", std::ios::out | std::ios::_Nocreate | std::ios::binary || std::ios::app);
+	system("cls");
 
-	//If the file isn't open, then return
-	if (!file.is_open())
-		return false;
-	//Send the Health and Damage into the file
-	file.write((char*)&player, sizeof(Character));
+	switch (choice)
+	{
+	case '1': //Saving
+		std::cout << "Input Player Health: ";
+		std::cin >> player.health;
+		std::cout << std::endl;
+		std::cout << "Input Player Damage: ";
+		std::cin >> player.damage;
+		std::cout << std::endl;
 
-	file.close();
-	//Saving End
+		//Saving Start
+		file.open("save.txt",std::ios::binary | std::ios::app);
 
-	//Loading Start
-	Character playerIn = Character();
+		//If the file isn't open, then return
+		if (!file.is_open())
+			return false;
+		//Send the Health and Damage into the file
+		file.write((char*)&player, sizeof(Character));
+		file.close();
+		//Saving End
+		break;
 
-	file.open("save.txt", std::ios::in | std::ios::binary);
+	case '2': //Load
+		//Loading Start
+		Character playerIn = Character();
 
-	//If the file isn't open, then return
-	if (!file.is_open())
-		return false;
-	//Get the Health and Damage from the file
-	file.seekg(sizeof(Character), std::ios::beg);
-	file.read((char*)&playerIn, sizeof(Character));
-	file.close();
-	//Loading End
+		file.open("save.txt", std::ios::in | std::ios::binary | std::ios::_Nocreate);
+		//If the file isn't open, then return
+		if (!file.is_open())
+			return false;
 
-	std::cout << playerIn.health << std::endl;
-	std::cout << playerIn.damage << std::endl;
+		int positionChoice = '0';
+		std::cout << "Which Character would you like to load?" << std::endl;
+		std::cin >> positionChoice;
+		positionChoice -= 1;
+
+		//Get the Health and Damage from the file
+		file.seekg(sizeof(Character) * positionChoice, std::ios::beg);
+		file.read((char*)&playerIn, sizeof(Character));
+		file.close();
+		//Loading End
+
+		std::cout << playerIn.health << std::endl;
+		std::cout << playerIn.damage << std::endl;
+		break;
+	} //choice switch
 } //fileIO Example
 
 bool binaryFileExample()
@@ -62,6 +80,7 @@ bool binaryFileExample()
 
 	std::fstream file;
 
+	//Saving Start
 	file.open("datData.dat", std::ios::out | std::ios::binary);
 	if (!file.is_open())
 		return false;
@@ -70,8 +89,11 @@ bool binaryFileExample()
 	file.write((char*)&sbeve2, sizeof(Character));
 	file.write((char*)&sbeve3, sizeof(Character));
 	file.close();
+	//Saving End
 
 	Character sbeve4 = Character();
+
+	//Loading Start
 	file.open("datData.dat", std::ios::in | std::ios::binary);
 	if (!file.is_open())
 		return false;
@@ -81,6 +103,7 @@ bool binaryFileExample()
 	std::cout << sbeve4.health << std::endl;
 	std::cout << sbeve4.damage << std::endl;
 	file.close();
+	//Loading End
 
 	return true;
 } //binary File Example
