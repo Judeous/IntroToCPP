@@ -110,7 +110,22 @@ bool binaryFileExample()
 
 int main()
 {
-	fileIOExample();
+	char choice = ' ';
+	std::cout << "Which program are you grading?" << std::endl;
+	std::cout << "1: fileIO" << std::endl;
+	std::cout << "2: Binary File" << std::endl;
+	std::cin >> choice;
+
+	switch (choice)
+	{
+	case '1':
+		fileIOExample();
+		break;
+
+	case '2':
+		binaryFileExample();
+		break;
+	}
 	system("pause");
 
 	return 0;
