@@ -5,8 +5,8 @@
 bool fileIOExample()
 {
 	Character player;
-	player.health = 100;
-	player.damage = 15;
+	//player.health = 100;
+	//player.damage = 15;
 
 	char choice = ' ';
 
@@ -48,7 +48,10 @@ bool fileIOExample()
 			return false;
 
 		int positionChoice = '0';
-		std::cout << "Which Character would you like to load?" << std::endl;
+		std::cout << "Which Character would you like to load?" << std::endl
+			<< "1: Character 1" << std::endl
+			<< "2: Character 2" << std::endl
+			<< "3: Character 3" << std::endl;
 		std::cin >> positionChoice;
 		positionChoice -= 1;
 
@@ -66,17 +69,17 @@ bool fileIOExample()
 
 bool binaryFileExample()
 {
-	Character sbeve = Character();
-	sbeve.health = 100;
-	sbeve.damage = 10;
+	Character player1 = Character();
+	player1.health = 100;
+	player1.damage = 10;
 	
-	Character sbeve2 = Character();
-	sbeve2.health = 90;
-	sbeve2.damage = 15;
+	Character player2 = Character();
+	player2.health = 90;
+	player2.damage = 15;
 	
-	Character sbeve3 = Character();
-	sbeve3.health = 110;
-	sbeve3.damage = 8;
+	Character player3 = Character();
+	player3.health = 110;
+	player3.damage = 8;
 
 	std::fstream file;
 
@@ -85,9 +88,9 @@ bool binaryFileExample()
 	if (!file.is_open())
 		return false;
 
-	file.write((char*)&sbeve, sizeof(Character));
-	file.write((char*)&sbeve2, sizeof(Character));
-	file.write((char*)&sbeve3, sizeof(Character));
+	file.write((char*)&player1, sizeof(Character));
+	file.write((char*)&player2, sizeof(Character));
+	file.write((char*)&player3, sizeof(Character));
 	file.close();
 	//Saving End
 
@@ -111,9 +114,9 @@ bool binaryFileExample()
 int main()
 {
 	char choice = ' ';
-	std::cout << "Which program are you grading?" << std::endl;
-	std::cout << "1: fileIO" << std::endl;
-	std::cout << "2: Binary File" << std::endl;
+	std::cout << "Which program are you grading?" << std::endl
+		<< "1: fileIO" << std::endl
+		<< "2: Binary File" << std::endl;
 	std::cin >> choice;
 
 	switch (choice)
